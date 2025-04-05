@@ -10,12 +10,12 @@
     bdata = BData()
 
     # Load BData from a file
-    bdata = BData('data_file.h5')
+    bdata = BData('data_file.bdata')
 
 #### Load data
 
-    # Load BData from 'data_file.h5'
-    bdata.load('data_file.h5')
+    # Load BData from 'data_file.bdata'
+    bdata.load('data_file.bdata')
 
 #### Show data
 
@@ -50,4 +50,4 @@
     bdata.set_metadatadescription('random_data', 'Random data')
 
     # Save data
-    bdata.save('output_file.h5')  # File format is selected automatically by extension. .mat, .h5,and .npy are supported.
+    bdata.save('output_file.bdata')  # File format is selected automatically by extension. .mat, .h5, .bdata are supported (.h5 is deprecated).

@@ -721,8 +721,12 @@ class BData(object):
         if file_type is None:
             file_type = self.__get_filetype(file_name)
 
+        _, ext = os.path.splitext(file_name)
+        if ext == ".h5":
+            warnings.warn("Saving BData with .h5 extension is deprecated. Please use .bdata extension instead.", DeprecationWarning, stacklevel=2)
+
         if file_type == "Matlab":
-            raise RuntimeError('Saving BData as a mat file is no longer supported. Please save the data as HDF5 (.h5).')
+            raise RuntimeError('Saving BData as a mat file is no longer supported. Please save the data as HDF5 (.bdata).')
         elif file_type == "HDF5":
             self.__save_h5(file_name, header=self.__header)
         else:
@@ -767,7 +771,7 @@ class BData(object):
         return index
 
     def __save_h5(self, file_name: str, header: Optional[dict] = None) -> None:
-        """Save data in HDF5 format (*.h5)."""
+        """Save data in HDF5 format (*.bdata or *.h5)."""
         with h5py.File(file_name, 'w') as h5file:
             # dataset
             h5file.create_dataset('/dataset', data=self.dataset)
@@ -880,6 +884,8 @@ class BData(object):
         if ext == ".mat":
             file_type = "Matlab"
         elif ext == ".h5":
+            file_type = "HDF5"
+        elif ext == ".bdata":
             file_type = "HDF5"
         else:
             raise ValueError("Unknown file extension: %s" % (ext))
